@@ -1,0 +1,21 @@
+
+
+通过geo-uri方式调用外部程序，可以启动google map，百度地图等：
+
+//geo:latitude,longitude
+//geo:latitude,longitude?z=zoom，z表示zoom级别，值为数字1到23
+//geo:0,0?q=my+street+address
+//geo:0,0?q=business+near+city
+Uri mUri = Uri.parse("geo:39.940409,116.355257?q=西直门");
+Intent mIntent = new Intent(Intent.ACTION_VIEW,mUri);
+startActivity(mIntent);
+
+这段代码将会弹出一个对话框，显示所有在initer-filter中注册了geo-uri类型的程序，让用户进行选择，
+如果我们的程序也需要支持处理geo-uri，可以通过在AndroidMainfest文件中添加如下代码来实现：
+
+<intent-filter android:priority="0" >
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="geo" />
+</intent-filter>
