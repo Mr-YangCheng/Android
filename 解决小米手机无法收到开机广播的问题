@@ -1,0 +1,28 @@
+                     
+                     解决小米手机无法收到开机广播的问
+  <receiver android:name="com.XXXXXXXXXXX >
+       <intent-filter>
+       <action android:name="android.intent.action.BOOT_COMPLETED" />
+       </intent-filter>
+   </receiver>
+   
+开机广播很容易写，如上代码所示，但是这段代码在小米手机上却失效
+
+其实很简单，小米手机默认屏蔽了所有开机广播的接收者，必须让用户手动在【系统与安全】-》
+【自启动管理】里添加你的程序
+
+那如何告诉用户去设置哩，简单弹个Toast是最简单的方法，不过最好能自动跳转到那个设置界面
+
+经过研究
+
+
+这个自启动管理不是单独的apk，是系统设置里的一个activity
+
+
+打开方法如下：
+         
+         Intent i = new Intent();
+				ComponentName comp = new ComponentName("com.android.settings",
+						"com.android.settings.BackgroundApplicationsManager");
+				i.setComponent(comp);
+				startActivity(i);
